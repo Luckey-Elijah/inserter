@@ -4,4 +4,4 @@
 
 ## 0.0.1
 
-🎉 Initial Realease
+🎉 Initial Release
