@@ -4,8 +4,6 @@ Additional tooling for mason_cli (and other file insert/writing) to write to exi
 
 ## Installation 💻
 
-**❗ In order to start using Inserter you must have the [Dart SDK][dart_install_link] installed on your machine.**
-
 Add `inserter` to your `pubspec.yaml`:
 
 ```yaml
