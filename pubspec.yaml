@@ -1,7 +1,6 @@
 name: inserter
 description: Additional tooling for mason_cli to write to existing files.
 version: 0.0.1
-publish_to: none
 repository: https://github.com/Luckey-Elijah/inserter
 
 environment:
