@@ -88,23 +88,26 @@ class Inserter {
   /// Run all the [builders] on the given [files].
   /// {@endtemplate}
   Future<void> execute() async {
+    // exit earlier -> no-op
     if (builders.isEmpty || files.isEmpty) return;
     for (final file in files) {
       final lines = readLines(file);
+
       await for (final line in lines) {
-        final willWriteSrcLine = await _handleLine(line, file);
-        if (willWriteSrcLine) buffer.writeln(line);
+        await _handleLine(line, file);
       }
+
       await file.writeAsString('$buffer', mode: FileMode.writeOnly);
-      buffer.clear();
+      buffer.clear(); // done with file, clear the buffer
     }
   }
 
-  Future<bool> _handleLine(String line, File file) async {
-    var willWriteSrcLine = true;
+  /// Return whether the handler will should write the line given
+  Future<void> _handleLine(String line, File file) async {
+    var writeLineAtEnd = true;
     for (final matcherBuilder in builders) {
       final hasMatch = matcherBuilder.matcher(file, line);
-      if (!hasMatch) continue;
+      if (!hasMatch) continue; // go to next builder
       final builtLine = await matcherBuilder.builder(file, line);
 
       matcherBuilder.strategy._map<void>(
@@ -116,12 +119,13 @@ class Inserter {
           ..writeln(line),
         onReplace: (_) {
           buffer.writeln(builtLine);
-          willWriteSrcLine = false;
         },
       );
 
-      willWriteSrcLine = false;
+      // a handler has done what it's needed with source line
+      writeLineAtEnd = false;
     }
-    return willWriteSrcLine;
+
+    if (writeLineAtEnd) buffer.writeln(line);
   }
 }
