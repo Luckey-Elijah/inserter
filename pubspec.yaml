@@ -1,5 +1,5 @@
 name: inserter
-description: Additional tooling for mason_cli to write to existing files.
+description: Tooling for inserting String into Files given their respective strategies.
 version: 0.0.1+1
 repository: https://github.com/Luckey-Elijah/inserter
 
