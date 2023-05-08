@@ -48,32 +48,17 @@ enum BuilderStrategy {
   }
 }
 
-/// {@template inserter}
-/// Additional tooling for mason_cli to write to existing files.
+/// {@template inserter_base}
+/// Core inserter interface for implementing non-UTF8 encodings
 /// {@endtemplate}
-class Inserter {
-  /// {@macro inserter}
-  Inserter({
+abstract class InserterBase {
+  /// {@macro inserter_base}
+  InserterBase({
+    required this.readLines,
     required this.files,
     required this.builders,
     StringBuffer? buffer,
   }) : buffer = buffer ?? StringBuffer();
-
-  /// Convience method for running a [Inserter.execute]
-  /// {@macro inserter.execute}
-  static Future<void> run({
-    required List<File> files,
-    required List<MatcherBuilder> builders,
-    StringBuffer? buffer,
-  }) {
-    final inserter = Inserter(
-      files: files,
-      builders: builders,
-      buffer: buffer,
-    );
-
-    return inserter.execute();
-  }
 
   /// [File]s that need to be registered for insertion for a giver [Inserter].
   final List<File> files;
@@ -83,6 +68,9 @@ class Inserter {
 
   /// Buffer used for write files contents.
   final StringBuffer buffer;
+
+  /// How the given file's contents are read.
+  Stream<String> Function(File file) readLines;
 
   /// {@template inserter.execute}
   /// Run all the [builders] on the given [files].
@@ -102,7 +90,6 @@ class Inserter {
     }
   }
 
-  /// Return whether the handler will should write the line given
   Future<void> _handleLine(String line, File file) async {
     var writeLineAtEnd = true;
     for (final matcherBuilder in builders) {
@@ -127,5 +114,33 @@ class Inserter {
     }
 
     if (writeLineAtEnd) buffer.writeln(line);
+  }
+}
+
+/// {@template inserter}
+/// Additional tooling for mason_cli to write to existing files.
+/// {@endtemplate}
+class Inserter extends InserterBase {
+  /// {@macro inserter}
+  Inserter({
+    super.buffer,
+    required super.builders,
+    required super.files,
+  }) : super(readLines: readLines);
+
+  /// Convience method for running a [Inserter.execute]
+  /// {@macro inserter.execute}
+  static Future<void> run({
+    required List<File> files,
+    required List<MatcherBuilder> builders,
+    StringBuffer? buffer,
+  }) {
+    final inserter = Inserter(
+      files: files,
+      builders: builders,
+      buffer: buffer,
+    );
+
+    return inserter.execute();
   }
 }
