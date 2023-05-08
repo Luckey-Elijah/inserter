@@ -12,24 +12,31 @@ dart pub install inserter
 
 ```dart
 Future<void> main() async {
-  final insertAwesomeBelowLine = MatcherBuilder(
+  final replaceWithAwesom = MatcherBuilder(
     // Use this to determine which line to trigger the line builder.
-    matcher: (file, line) => line.contains('// INSERT BELOW'),
+    matcher: (file, line) => line.contains('// REPLACE WITH AWESOME'),
     
     // The line to be written.
     builder: (file, line) => 'bool void isAwesome() => true;',
 
     // Where the line will go
-    strategy: BuilderStrategy.below,
+    strategy: BuilderStrategy.replace, // also below & above
   );
   await Inserter.run(
     files: [File('update_me.dart')],
-    builders: [insertAwesomeBelowLine] 
+    builders: [replaceWithAwesom] 
   );
 }
 ```
 
-And your line will be updated!
+**What changed in _`update_me.dart`_?**
+```diff
+void main() {
+  print(isAwesome());
+}
+- // REPLACE WITH AWESOME
++ bool void isAwesome() => true;
+```
 
 ### Non UTF-8 encodings
 
