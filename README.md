@@ -17,7 +17,7 @@ Future<void> main() async {
     matcher: (file, line) => line.contains('// REPLACE WITH AWESOME'),
     
     // The line to be written.
-    builder: (file, line) => 'bool void isAwesome() => true;',
+    builder: (file, line) => 'bool isAwesome() => true;',
 
     // Where the line will go
     strategy: BuilderStrategy.replace, // also below & above
@@ -35,7 +35,7 @@ void main() {
   print(isAwesome());
 }
 - // REPLACE WITH AWESOME
-+ bool void isAwesome() => true;
++ bool isAwesome() => true;
 ```
 
 ### Non UTF-8 encodings
