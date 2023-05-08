@@ -36,12 +36,12 @@ And your line will be updated!
 Extend the `InserterBase` and provide you own `LineConverter` method:
 
 ```dart
-class MyOtherInserter extends IserterBase {
-  InserterBase({
+class MyOtherInserter extends InserterBase {
+  MyOtherInserter({
     required this.files,
     required this.builders,
   }) : super({
-    buffer: StringBuffer(),
+    buffer: StringBuffer(), // typically, allow injecting this for testing.
     readlines: (file) {
         /// .... not a real method
         return Stream.fromFile(file);
