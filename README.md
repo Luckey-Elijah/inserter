@@ -24,7 +24,7 @@ Future<void> main() async {
   );
   await Inserter.run(
     files: [File('update_me.dart')],
-    builders: [replaceWithAwesom] 
+    builders: [replaceWithAwesome] 
   );
 }
 ```
