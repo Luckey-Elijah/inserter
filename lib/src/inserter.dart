@@ -48,8 +48,13 @@ enum BuilderStrategy {
   }
 }
 
+/// {@template read_line_converter}
+/// How the given file's contents are read.
+/// {@endtemplate}
+typedef LineConverter = Stream<String> Function(File file);
+
 /// {@template inserter_base}
-/// Core inserter interface for implementing non-UTF8 encodings
+/// Core inserter interface for implementing specialied line readers.
 /// {@endtemplate}
 abstract class InserterBase {
   /// {@macro inserter_base}
@@ -69,8 +74,8 @@ abstract class InserterBase {
   /// Buffer used for write files contents.
   final StringBuffer buffer;
 
-  /// How the given file's contents are read.
-  Stream<String> Function(File file) readLines;
+  /// {@macro read_line_converter}
+  final LineConverter readLines;
 
   /// {@template inserter.execute}
   /// Run all the [builders] on the given [files].
@@ -118,7 +123,8 @@ abstract class InserterBase {
 }
 
 /// {@template inserter}
-/// Additional tooling for mason_cli to write to existing files.
+/// Tooling for inserting `String` into `File`s given
+/// their respective strategies.
 /// {@endtemplate}
 class Inserter extends InserterBase {
   /// {@macro inserter}
@@ -128,7 +134,7 @@ class Inserter extends InserterBase {
     required super.files,
   }) : super(readLines: readLines);
 
-  /// Convience method for running a [Inserter.execute]
+  /// Convience method for running an [Inserter.execute]
   /// {@macro inserter.execute}
   static Future<void> run({
     required List<File> files,
