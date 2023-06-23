@@ -1,3 +1,7 @@
+## 0.0.2+1
+
+- Update README.md
+
 ## 0.0.2
 
 - Updates analysis

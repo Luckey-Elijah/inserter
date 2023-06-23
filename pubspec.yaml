@@ -1,6 +1,6 @@
 name: inserter
 description: Tooling for inserting String into Files given their respective strategies.
-version: 0.0.2
+version: 0.0.2+1
 repository: https://github.com/Luckey-Elijah/inserter
 
 environment:

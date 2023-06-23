@@ -5,7 +5,7 @@ Tooling for inserting `String` into `File`s given their respective strategies.
 ## Install
 
 ```sh
-dart pub install inserter
+dart pub add inserter
 ```
 
 ## Usage
