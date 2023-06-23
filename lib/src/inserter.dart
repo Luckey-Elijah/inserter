@@ -129,9 +129,9 @@ abstract class InserterBase {
 class Inserter extends InserterBase {
   /// {@macro inserter}
   Inserter({
-    super.buffer,
     required super.builders,
     required super.files,
+    super.buffer,
   }) : super(readLines: readLines);
 
   /// Convenience method for running an [Inserter.execute]
