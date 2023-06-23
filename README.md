@@ -12,7 +12,7 @@ dart pub add inserter
 
 ```dart
 Future<void> main() async {
-  final replaceWithAwesom = MatcherBuilder(
+  final replaceWithAwesome = MatcherBuilder(
     // Use this to determine which line to trigger the line builder.
     matcher: (file, line) => line.contains('// REPLACE WITH AWESOME'),
     
@@ -49,7 +49,7 @@ class MyOtherInserter extends InserterBase {
     required this.builders,
   }) : super({
     buffer: StringBuffer(), // typically, allow injecting this for testing.
-    readlines: (file) {
+    readLines: (file) {
         /// .... not a real method
         return Stream.fromFile(file);
     }
