@@ -2,6 +2,7 @@
 
 - Updates analysis
 - Spelling corrections for docs
+- Adds Dart 3 compatibility
 
 ## 0.0.1+1
 
