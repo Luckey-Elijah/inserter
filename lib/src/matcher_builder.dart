@@ -16,7 +16,7 @@ class MatcherBuilder {
   ///
   final String debugLabel;
 
-  /// The expresion that will be used to match a line.
+  /// The expression that will be used to match a line.
   final Matcher matcher;
 
   /// {@macro line_builder}

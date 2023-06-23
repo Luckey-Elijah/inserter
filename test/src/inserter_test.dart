@@ -9,7 +9,7 @@ class MockFile extends Mock implements File {}
 
 class MockStringBuffer extends Mock implements StringBuffer {}
 
-Stream<List<int>> encodeStringtoUtf8(String source) =>
+Stream<List<int>> encodeStringToUtf8(String source) =>
     Stream.value(utf8.encode(source));
 
 void main() {
@@ -44,7 +44,7 @@ file''';
 
     test('writes nothing when [builders] is empty', () async {
       when(file.openRead)
-          .thenAnswer((invocation) => encodeStringtoUtf8(source));
+          .thenAnswer((invocation) => encodeStringToUtf8(source));
 
       await Inserter.run(
         files: [file],

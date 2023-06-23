@@ -16,7 +16,7 @@ typedef LineBuilder = FutureOr<String> Function(File file, String line);
 typedef Matcher = bool Function(File file, String line);
 
 /// {@template builder_strategy}
-/// Strategy used by a [MatcherBuilder] to determin where the results of
+/// Strategy used by a [MatcherBuilder] to determine where the results of
 /// a [LineBuilder] should go.
 /// {@endtemplate}
 enum BuilderStrategy {
@@ -54,7 +54,7 @@ enum BuilderStrategy {
 typedef LineConverter = Stream<String> Function(File file);
 
 /// {@template inserter_base}
-/// Core inserter interface for implementing specialied line readers.
+/// Core inserter interface for implementing specialized line readers.
 /// {@endtemplate}
 abstract class InserterBase {
   /// {@macro inserter_base}
@@ -68,7 +68,7 @@ abstract class InserterBase {
   /// [File]s that need to be registered for insertion for a giver [Inserter].
   final List<File> files;
 
-  /// When a match is made, the appropiate [LineBuilder] is executed.
+  /// When a match is made, the appropriate [LineBuilder] is executed.
   final List<MatcherBuilder> builders;
 
   /// Buffer used for write files contents.
@@ -134,7 +134,7 @@ class Inserter extends InserterBase {
     required super.files,
   }) : super(readLines: readLines);
 
-  /// Convience method for running an [Inserter.execute]
+  /// Convenience method for running an [Inserter.execute]
   /// {@macro inserter.execute}
   static Future<void> run({
     required List<File> files,
