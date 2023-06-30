@@ -30,6 +30,7 @@ Future<void> main() async {
 ```
 
 **What changed in _`update_me.dart`_?**
+
 ```diff
 void main() {
   print(isAwesome());
