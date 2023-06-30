@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Better `inserter` options for the `strategy` flags.
+
 ## 0.0.4
 
 - Adds `inserter` command line app

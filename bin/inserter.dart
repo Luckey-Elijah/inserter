@@ -12,7 +12,7 @@ void main(List<String> args) async {
   String? insertLine;
   var fileInputs = <String>[];
 
-  const strategies = ['above', 'below', 'replace'];
+  final strategies = BuilderStrategy.values.map((e) => '$e');
   final parser = ArgParser()
     ..addSeparator('''
 Insert lines into files given a strategy.\n
@@ -38,19 +38,16 @@ ${styleBold.wrap('Example:')}
       abbr: 's',
       aliases: ['s'],
       help: 'Specify a builder strategy.',
-      allowed: strategies,
+      allowed: [...strategies, ...strategies.map((e) => e.substring(0, 1))],
       allowedHelp: {
-        'above': 'Set builder strategy to '
-            'insert ${styleBold.wrap('above')} the matched line.',
-        'below': 'Set builder strategy to '
-            'insert ${styleBold.wrap('below')} the matched line.',
-        'replace': 'Set builder strategy to '
-            '${styleBold.wrap('replace')} the matched line.',
+        'a|above': 'Insert ${styleBold.wrap('above')} the matched line.',
+        'b|below': 'Insert ${styleBold.wrap('below')} the matched line.',
+        'r|replace': '${styleBold.wrap('Replace')} the matched line.',
       },
       callback: (option) => strategy = switch (option) {
-        'above' => BuilderStrategy.above,
-        'below' => BuilderStrategy.below,
-        'replace' => BuilderStrategy.replace,
+        'above' || 'a' => BuilderStrategy.above,
+        'below' || 'b' => BuilderStrategy.below,
+        'replace' || 'r' => BuilderStrategy.replace,
         _ => strategy,
       },
     )
