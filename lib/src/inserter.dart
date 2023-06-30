@@ -71,23 +71,10 @@ abstract class InserterBase {
   /// {@macro read_line_converter}
   final LineConverter readLines;
 
-  Map<
-      MatcherBuilder,
-      ({
-        bool shouldContinue,
-        int matches,
-      })>? _mappedBuildersSource;
-  Map<
-      MatcherBuilder,
-      ({
-        bool shouldContinue,
-        int matches,
-      })> get _mappedBuilders => _mappedBuildersSource ??= {
+  _MatcherBuilderState? _mappedBuildersSource;
+  _MatcherBuilderState get _mappedBuilders => _mappedBuildersSource ??= {
         for (final builder in builders)
-          builder: (
-            shouldContinue: true,
-            matches: 0,
-          )
+          builder: (shouldContinue: true, matches: 0)
       };
 
   /// {@template inserter.execute}
@@ -175,3 +162,10 @@ class Inserter extends InserterBase {
     return inserter.execute();
   }
 }
+
+typedef _MatcherBuilderState = Map<
+    MatcherBuilder,
+    ({
+      bool shouldContinue,
+      int matches,
+    })>;
