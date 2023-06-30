@@ -12,6 +12,7 @@ class MatcherBuilder {
     required this.matcher,
     required this.builder,
     this.strategy = BuilderStrategy.below,
+    this.stopWhen,
   });
 
   /// {@macro matcher}
@@ -22,9 +23,36 @@ class MatcherBuilder {
 
   /// {@macro builder_strategy}
   final BuilderStrategy strategy;
+
+  /// {@macro element}
+  final StopWhen? stopWhen;
 }
 
 /// {@template matcher}
 /// Callback used when evaluating whether a line is matched
 /// {@endtemplate}
-typedef Matcher = bool Function(File file, String line);
+typedef Matcher = bool Function(
+  /// The current file evaluated.
+  File file,
+
+  /// The current line evaluated.
+  String line,
+);
+
+/// {@template element}
+/// Evaluated after [MatcherBuilder.matcher] and [MatcherBuilder.builder]
+/// are executed.
+///
+/// Control when the current [MatcherBuilder] should stop matching and inserting
+/// lines.
+/// {@endtemplate}
+typedef StopWhen = bool Function(
+  /// The current file evaluated.
+  File file,
+
+  /// The current line evaluated.
+  String line,
+
+  /// Count of matches made
+  int totalMatches,
+);

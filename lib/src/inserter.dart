@@ -71,10 +71,30 @@ abstract class InserterBase {
   /// {@macro read_line_converter}
   final LineConverter readLines;
 
+  Map<
+      MatcherBuilder,
+      ({
+        bool shouldContinue,
+        int matches,
+      })>? _mappedBuildersSource;
+  Map<
+      MatcherBuilder,
+      ({
+        bool shouldContinue,
+        int matches,
+      })> get _mappedBuilders => _mappedBuildersSource ??= {
+        for (final builder in builders)
+          builder: (
+            shouldContinue: true,
+            matches: 0,
+          )
+      };
+
   /// {@template inserter.execute}
   /// Run all the [builders] on the given [files].
   /// {@endtemplate}
   Future<void> execute() async {
+    _mappedBuildersSource = null; // reset state
     // exit earlier -> no-op
     if (builders.isEmpty || files.isEmpty) return;
     for (final file in files) {
@@ -91,7 +111,10 @@ abstract class InserterBase {
 
   Future<void> _handleLine(String line, File file) async {
     var writeLineAtEnd = true;
-    for (final matcherBuilder in builders) {
+    for (final matcherBuilder in _mappedBuilders.entries
+        .where((entry) => entry.value.shouldContinue)
+        .map((e) => e.key)) {
+      final state = _mappedBuilders[matcherBuilder]!;
       final hasMatch = matcherBuilder.matcher(file, line);
       if (!hasMatch) continue; // go to next builder
       final builtLine = await matcherBuilder.builder(file, line);
@@ -110,6 +133,14 @@ abstract class InserterBase {
 
       // a handler has done what it's needed with source line
       writeLineAtEnd = false;
+
+      final totalMatches = state.matches + (hasMatch ? 0 : 1);
+
+      _mappedBuilders[matcherBuilder] = (
+        matches: totalMatches,
+        shouldContinue:
+            matcherBuilder.stopWhen?.call(file, line, totalMatches) ?? true,
+      );
     }
 
     if (writeLineAtEnd) buffer.writeln(line);
