@@ -1,13 +1,19 @@
 name: inserter
 description: Tooling for inserting String into Files given their respective strategies.
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/Luckey-Elijah/inserter
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
-  apealed_analysis: ^0.0.1
   mocktail: ^0.3.0
   test: ^1.19.2
   very_good_analysis: ^5.0.0+1
+
+dependencies:
+  args: ^2.4.2
+  mason_logger: ^0.2.7
+
+executables:
+  inserter:

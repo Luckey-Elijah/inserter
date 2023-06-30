@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Adds `inserter` command line app
+
 ## 0.0.3
 
 - Adds `StopWhen` to `MatcherBuilder`: when `stopWhen` evaluates to `true` the `MatcherBuilder` is not longer used in it's given `Inserter` context.

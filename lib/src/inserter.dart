@@ -40,6 +40,9 @@ enum BuilderStrategy {
         return onReplace(this);
     }
   }
+
+  @override
+  String toString() => name.split('.').last;
 }
 
 /// {@template read_line_converter}
