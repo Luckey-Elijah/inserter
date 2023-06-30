@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:inserter/inserter.dart';
 
 /// {@template matcher_builder}
@@ -10,13 +12,9 @@ class MatcherBuilder {
     required this.matcher,
     required this.builder,
     this.strategy = BuilderStrategy.below,
-    this.debugLabel = '',
   });
 
-  ///
-  final String debugLabel;
-
-  /// The expression that will be used to match a line.
+  /// {@macro matcher}
   final Matcher matcher;
 
   /// {@macro line_builder}
@@ -25,3 +23,8 @@ class MatcherBuilder {
   /// {@macro builder_strategy}
   final BuilderStrategy strategy;
 }
+
+/// {@template matcher}
+/// Callback used when evaluating whether a line is matched
+/// {@endtemplate}
+typedef Matcher = bool Function(File file, String line);

@@ -11,12 +11,10 @@ void main() async {
 
   final builders = [
     MatcherBuilder(
-      debugLabel: 'UPDATE FOR $keyOne',
       matcher: (file, line) => line.contains(keyOne),
       builder: (file, line) => 'UPDATE FOR $keyOne',
     ),
     MatcherBuilder(
-      debugLabel: 'UPDATE FOR $keyTwo',
       matcher: (file, line) => line.contains(keyTwo),
       builder: (file, line) {
         const insert = 'UPDATE FOR $keyTwo';
@@ -27,7 +25,6 @@ void main() async {
       strategy: BuilderStrategy.above,
     ),
     MatcherBuilder(
-      debugLabel: 'UPDATE FOR $keyThree',
       matcher: (file, line) => line.contains(keyThree),
       builder: (file, line) =>
           line.split(' ').fold<String>('', (previous, word) {

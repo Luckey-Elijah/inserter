@@ -9,12 +9,6 @@ import 'package:inserter/inserter.dart';
 /// {@endtemplate}
 typedef LineBuilder = FutureOr<String> Function(File file, String line);
 
-/// {@template matcher}
-/// Callback used when evaluating whether a line is matched
-/// {@endtemplate}
-/// {@macro matcher}
-typedef Matcher = bool Function(File file, String line);
-
 /// {@template builder_strategy}
 /// Strategy used by a [MatcherBuilder] to determine where the results of
 /// a [LineBuilder] should go.
