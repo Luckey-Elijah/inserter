@@ -14,17 +14,17 @@ dart pub add inserter
 Future<void> main() async {
   final replaceWithAwesome = MatcherBuilder(
     // Use this to determine which line to trigger the line builder.
-    matcher: (file, line) => line.contains('// REPLACE WITH AWESOME'),
-    
+    matcher: (file, line) async => line.contains('// REPLACE WITH AWESOME'),
+
     // The line to be written.
-    builder: (file, line) => 'bool isAwesome() => true;',
+    builder: (file, line) async => 'bool isAwesome() => true;',
 
     // Where the line will go
     strategy: BuilderStrategy.replace, // also below & above
   );
   await Inserter.run(
     files: [File('update_me.dart')],
-    builders: [replaceWithAwesome] 
+    builders: [replaceWithAwesome]
   );
 }
 ```
