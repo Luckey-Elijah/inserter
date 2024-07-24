@@ -56,13 +56,13 @@ abstract class InserterBase {
   }) : buffer = buffer ?? StringBuffer();
 
   /// [File]s that need to be registered for insertion for a giver [Inserter].
-  final List<File> files;
+  final Iterable<File> files;
 
   /// Encoding used for writing files.
   final Encoding encoding;
 
   /// When a match is made, the appropriate [LineBuilder] is executed.
-  final List<MatcherBuilder> builders;
+  final Iterable<MatcherBuilder> builders;
 
   /// Buffer used for write files contents.
   final StringBuffer buffer;
@@ -154,8 +154,8 @@ class Inserter extends InserterBase {
   /// Convenience method for running an [Inserter.execute]
   /// {@macro inserter.execute}
   static Future<void> run({
-    required List<File> files,
-    required List<MatcherBuilder> builders,
+    required Iterable<File> files,
+    required Iterable<MatcherBuilder> builders,
     Encoding encoding = utf8,
     StringBuffer? buffer,
   }) {
