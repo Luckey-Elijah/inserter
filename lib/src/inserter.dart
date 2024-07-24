@@ -1,13 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:inserter/inserter.dart';
-
-/// {@template line_builder}
-/// Callback for writing generating a line(s) of code with the given
-/// context of the pattern and full [line] that was matched.
-/// {@endtemplate}
-typedef LineBuilder = FutureOr<String> Function(File file, String line);
 
 /// {@template builder_strategy}
 /// Strategy used by a [MatcherBuilder] to determine where the results of
@@ -31,14 +26,11 @@ enum BuilderStrategy {
     required T Function(BuilderStrategy) onAbove,
     required T Function(BuilderStrategy) onReplace,
   }) {
-    switch (this) {
-      case BuilderStrategy.below:
-        return onBelow(this);
-      case BuilderStrategy.above:
-        return onAbove(this);
-      case BuilderStrategy.replace:
-        return onReplace(this);
-    }
+    return switch (this) {
+      BuilderStrategy.below => onBelow(this),
+      BuilderStrategy.above => onAbove(this),
+      BuilderStrategy.replace => onReplace(this),
+    };
   }
 
   @override
@@ -59,11 +51,15 @@ abstract class InserterBase {
     required this.readLines,
     required this.files,
     required this.builders,
+    this.encoding = utf8,
     StringBuffer? buffer,
   }) : buffer = buffer ?? StringBuffer();
 
   /// [File]s that need to be registered for insertion for a giver [Inserter].
   final List<File> files;
+
+  /// Encoding used for writing files.
+  final Encoding encoding;
 
   /// When a match is made, the appropriate [LineBuilder] is executed.
   final List<MatcherBuilder> builders;
@@ -77,7 +73,7 @@ abstract class InserterBase {
   _MatcherBuilderState? _mappedBuildersSource;
   _MatcherBuilderState get _mappedBuilders => _mappedBuildersSource ??= {
         for (final builder in builders)
-          builder: (shouldContinue: true, matches: 0)
+          builder: (shouldContinue: true, matches: 0),
       };
 
   /// {@template inserter.execute}
@@ -94,7 +90,11 @@ abstract class InserterBase {
         await _handleLine(line, file);
       }
 
-      await file.writeAsString('$buffer', mode: FileMode.writeOnly);
+      await file.writeAsString(
+        '$buffer',
+        mode: FileMode.writeOnly,
+        encoding: encoding,
+      );
       buffer.clear(); // done with file, clear the buffer
     }
   }
