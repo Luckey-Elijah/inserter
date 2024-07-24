@@ -31,7 +31,7 @@ void main() async {
         final forInsert = word == keyThree ? 'UPDATE FOR $keyThree' : word;
         return '${previous.isEmpty ? '' : '$previous '}$forInsert';
       }),
-      stopWhen: (_, __, totalMatches) =>
+      stopWhen: (_, __, totalMatches) async =>
           totalMatches > 0, //stop after one match
       strategy: BuilderStrategy.replace,
     ),

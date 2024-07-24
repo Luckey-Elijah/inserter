@@ -129,7 +129,8 @@ abstract class InserterBase {
       _mappedBuilders[matcherBuilder] = (
         matches: totalMatches,
         shouldContinue:
-            matcherBuilder.stopWhen?.call(file, line, totalMatches) ?? true,
+            await matcherBuilder.stopWhen?.call(file, line, totalMatches) ??
+                true,
       );
     }
 
@@ -147,6 +148,7 @@ class Inserter extends InserterBase {
     required super.builders,
     required super.files,
     super.buffer,
+    super.encoding,
   }) : super(readLines: readLines);
 
   /// Convenience method for running an [Inserter.execute]
@@ -154,12 +156,14 @@ class Inserter extends InserterBase {
   static Future<void> run({
     required List<File> files,
     required List<MatcherBuilder> builders,
+    Encoding encoding = utf8,
     StringBuffer? buffer,
   }) {
     final inserter = Inserter(
       files: files,
       builders: builders,
       buffer: buffer,
+      encoding: encoding,
     );
 
     return inserter.execute();

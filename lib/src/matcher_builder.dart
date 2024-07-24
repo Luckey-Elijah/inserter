@@ -2,12 +2,6 @@ import 'dart:io';
 
 import 'package:inserter/inserter.dart';
 
-/// {@template line_builder}
-/// Callback for writing generating a line(s) of code with the given
-/// context of the pattern and full line that was matched.
-/// {@endtemplate}
-typedef LineBuilder = Future<String> Function(File file, String line);
-
 /// {@template matcher_builder}
 /// Describes the context of when a line is matched and how to build the
 /// line need for the [Inserter] calling it.
@@ -34,6 +28,12 @@ class MatcherBuilder {
   final StopWhen? stopWhen;
 }
 
+/// {@template line_builder}
+/// Callback for writing generating a line(s) of code with the given
+/// context of the pattern and full line that was matched.
+/// {@endtemplate}
+typedef LineBuilder = Future<String> Function(File file, String line);
+
 /// {@template matcher}
 /// Callback used when evaluating whether a line is matched
 /// {@endtemplate}
@@ -52,7 +52,7 @@ typedef Matcher = Future<bool> Function(
 /// Control when the current [MatcherBuilder] should stop matching and inserting
 /// lines.
 /// {@endtemplate}
-typedef StopWhen = bool Function(
+typedef StopWhen = Future<bool> Function(
   /// The current file evaluated.
   File file,
 

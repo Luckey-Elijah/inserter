@@ -1,3 +1,8 @@
+## 0.1.0
+
+- `Inserter` supports any `Encoding` for writing files (defaults to `Utf8Codec`)
+- `StopWhen`, `Matcher`, and `LineBuilder` are now return `Future`s
+
 ## 0.0.5
 
 - Better `inserter` options for the `strategy` flags.
