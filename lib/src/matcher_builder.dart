@@ -4,7 +4,7 @@ import 'package:inserter/inserter.dart';
 
 /// {@template line_builder}
 /// Callback for writing generating a line(s) of code with the given
-/// context of the pattern and full [line] that was matched.
+/// context of the pattern and full line that was matched.
 /// {@endtemplate}
 typedef LineBuilder = Future<String> Function(File file, String line);
 
