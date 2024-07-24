@@ -11,12 +11,12 @@ void main() async {
 
   final builders = [
     MatcherBuilder(
-      matcher: (file, line) => line.contains(keyOne),
-      builder: (file, line) => 'UPDATE FOR $keyOne',
+      matcher: (file, line) async => line.contains(keyOne),
+      builder: (file, line) async => 'UPDATE FOR $keyOne',
     ),
     MatcherBuilder(
-      matcher: (file, line) => line.contains(keyTwo),
-      builder: (file, line) {
+      matcher: (file, line) async => line.contains(keyTwo),
+      builder: (file, line) async {
         const insert = 'UPDATE FOR $keyTwo';
         // a log to show when a new line is written
         stdout.writeln('writing $insert in ${file.path}');
@@ -25,8 +25,8 @@ void main() async {
       strategy: BuilderStrategy.above,
     ),
     MatcherBuilder(
-      matcher: (file, line) => line.contains(keyThree),
-      builder: (file, line) =>
+      matcher: (file, line) async => line.contains(keyThree),
+      builder: (file, line) async =>
           line.split(' ').fold<String>('', (previous, word) {
         final forInsert = word == keyThree ? 'UPDATE FOR $keyThree' : word;
         return '${previous.isEmpty ? '' : '$previous '}$forInsert';

@@ -37,7 +37,7 @@ class MatcherBuilder {
 /// {@template matcher}
 /// Callback used when evaluating whether a line is matched
 /// {@endtemplate}
-typedef Matcher = bool Function(
+typedef Matcher = Future<bool> Function(
   /// The current file evaluated.
   File file,
 

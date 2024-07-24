@@ -116,10 +116,10 @@ ${parser.usage}''',
       files: [file],
       builders: [
         MatcherBuilder(
-          matcher: (_, line) => line == matchLine,
-          builder: (_, __) => insertLine!,
+          matcher: (_, line) async => line == matchLine,
+          builder: (_, __) async => insertLine!,
           strategy: strategy!,
-        )
+        ),
       ],
     );
 

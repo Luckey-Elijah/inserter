@@ -105,7 +105,7 @@ abstract class InserterBase {
         .where((entry) => entry.value.shouldContinue)
         .map((e) => e.key)) {
       final state = _mappedBuilders[matcherBuilder]!;
-      final hasMatch = matcherBuilder.matcher(file, line);
+      final hasMatch = await matcherBuilder.matcher(file, line);
       if (!hasMatch) continue; // go to next builder
       final builtLine = await matcherBuilder.builder(file, line);
 
