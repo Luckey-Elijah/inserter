@@ -1,3 +1,7 @@
+## 0.2.0
+
+- bump `mason_logger` to `^0.3.1`
+
 ## 0.1.0
 
 - `InserterBase` supports any `Encoding` for writing files (defaults to `Utf8Codec`)
